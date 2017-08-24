@@ -71,16 +71,17 @@ namespace GameDevProtoType
             Position += MoveSpeed;
 
             MoveSpeed.X = Velocity.X;
-            current_animation = "walk_right";
             calculateEntityFrame(Velocity);
             
-
+            //hier enemy probleem verder debuggen
             if (TouchedEdge == true)
             {
                 Velocity.X = Velocity.X * -1;
                 current_animation = "walk_left";
                 TouchedEdge = false;
+                calculateEntityFrame(Velocity);
             }
+
             //else
             //{
             //    MoveSpeed.X = Velocity.X;
@@ -94,6 +95,8 @@ namespace GameDevProtoType
                 MoveSpeed.Y += 0.15f;
                 IsGrounded = false;   
             }
+
+
         }
     }
 }

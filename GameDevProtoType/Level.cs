@@ -13,7 +13,6 @@ namespace GameDevProtoType
     {
         Vector2 obstaclePosition;
         protected byte[,] tileArray;
-        protected Obstacle Obstacle;
         protected Rectangle obstacleBounds;
         protected Texture2D ObstacleSprite;
         protected ContentManager Content;
@@ -83,7 +82,7 @@ namespace GameDevProtoType
                             float shortestHeight = Math.Min(Math.Abs(topEdge), Math.Abs(bottomEdge));
                             float shortestFinal = Math.Min(Math.Abs(shortestWidth), Math.Abs(shortestHeight));
 
-                            if (shortestFinal == Math.Abs(leftEdge)) //randomly activates while walking over tiles. causes enemy to bug
+                            if (shortestFinal == Math.Abs(leftEdge))
                             {
                                 entity.Position.X = obstacleBounds.X + obstacleBounds.Width;
                                 MoveSpeed.X = 0;

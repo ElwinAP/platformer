@@ -40,7 +40,6 @@ namespace GameDevProtoType
 
         public override void Initialize()
         {
-            Obstacle = new Obstacle();
             CreateTileArray();
         }
 
@@ -48,7 +47,6 @@ namespace GameDevProtoType
         {
             BackgroundTexture = Content.Load<Texture2D>("Graphics\\Level1bg");
             ObstacleSprite = Content.Load<Texture2D>("Graphics\\Tilesheet");
-            Obstacle.Initialize(ObstacleSprite);
         }
 
         public override void DrawBackground(GraphicsDevice graphicsdevice)

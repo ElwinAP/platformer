@@ -67,7 +67,7 @@ namespace GameDevProtoType
 
             player.Update(gameTime);
             level1.Collision(gameTime, player.Bounds, player, player.MoveSpeed);
-            //level1.Collision(gameTime, enemy1.Bounds, enemy1, enemy1.MoveSpeed);
+            level1.Collision(gameTime, enemy1.Bounds, enemy1, enemy1.MoveSpeed);
             enemy1.Update(gameTime);
             
                    
