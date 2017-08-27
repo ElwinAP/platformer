@@ -19,12 +19,29 @@ namespace GameDevProtoType
         public GraphicsDevice GraphicsDevice;
         public ContentManager Content;
         public Level Level;
+
         public bool _IsGrounded;
 
         public bool IsGrounded
         {
             get { return _IsGrounded; }
             set { _IsGrounded = value; }
+        }
+
+        public bool _ReachedExit;
+
+        public bool ReachedExit
+        {
+            get { return _ReachedExit; }
+            set { _ReachedExit = value; }
+        }
+
+        public bool _TouchedHazard;
+
+        public bool TouchedHazard
+        {
+            get { return _TouchedHazard; }
+            set { _TouchedHazard = value; }
         }
 
         public bool _TouchedEdge;

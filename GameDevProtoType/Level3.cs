@@ -9,12 +9,13 @@ using Microsoft.Xna.Framework.Content;
 
 namespace GameDevProtoType
 {
-    class Level1 : Level
+    class Level3 : Level
     {
-        public Level1 (ContentManager content, SpriteBatch spritebatch)
-            : base (content, spritebatch)
+
+        public Level3(ContentManager content, SpriteBatch spritebatch)
+            : base(content, spritebatch)
         { }
-      
+
         protected void CreateTileArray()
         {
             tileArray = new byte[,]
@@ -24,16 +25,16 @@ namespace GameDevProtoType
             { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
             { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
             { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-            { 0,0,0,0,0,0,0,0,0,3,5,5,5,5,5,4,0,0,0,0,0,0,0,0,8 },
-            { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,5,5,5 },
             { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-            { 0,0,0,0,0,0,0,0,0,3,5,7,4,0,0,0,0,0,0,0,0,0,0,0,0 },
-            { 0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-            { 0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-            { 0,0,0,0,3,5,5,5,5,7,5,7,5,4,0,0,0,0,0,0,0,0,0,0,0 },
             { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-            { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,2,0,0,0 },
-            { 1,1,1,1,1,9,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 }
+            { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+            { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+            { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+            { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+            { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0 },
+            { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0 },
+            { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0 },
+            { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 }
             };
         }
 
@@ -41,20 +42,19 @@ namespace GameDevProtoType
         {
             CreateTileArray();
             StartPosition = new Vector2(20, 400);
-            enemy1Position = new Vector2(400, 400);
-            enemy2Position = new Vector2(600, 400);
+            enemy1Position = new Vector2(200, 100);
+            enemy2Position = new Vector2(300, 200);
         }
 
         public override void LoadContent()
-        {         
-            BackgroundTexture = Content.Load<Texture2D>("Graphics\\Level1");
+        {
+            BackgroundTexture = Content.Load<Texture2D>("Graphics\\Level2");
             ObstacleSprite = Content.Load<Texture2D>("Graphics\\Tilesheet");
         }
 
-        public override void DrawBackground (GraphicsDevice graphicsdevice)
+        public override void DrawBackground(GraphicsDevice graphicsdevice)
         {
             SpriteBatch.Draw(BackgroundTexture, graphicsdevice.Viewport.Bounds, Color.White);
         }
-
     }
 }

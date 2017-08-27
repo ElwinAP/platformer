@@ -23,8 +23,17 @@ namespace GameDevProtoType
         const int SpriteHeight = 32;
         int TileHelper;
         protected Entity entity;
-        protected Vector2 enemyPosition;
-        
+        public Vector2 enemy1Position;
+        public Vector2 enemy2Position;
+
+        public Vector2 _StartPosition;
+
+        public Vector2 StartPosition
+        {
+            get { return _StartPosition; }
+            set { _StartPosition = value; }
+        }
+
         public Level(ContentManager content, SpriteBatch spritebatch)
         {
             this.Content = content;
@@ -47,13 +56,34 @@ namespace GameDevProtoType
                     if (tileArray[row, column] != 0)
                     {
                         obstaclePosition = new Vector2(column * 32, row * 32);
-                        calculateCollision(entityBounds, entity, obstaclePosition);
+                        CalculateCollision(entityBounds, entity, obstaclePosition);
+                    }
+                    
+                    if (tileArray[row, column] == 8) //exitpoint van het level
+                    {
+                        obstaclePosition = new Vector2(column * 32, row * 32);
+                        entity.ReachedExit = CheckIntersect(entityBounds, entity, obstaclePosition);
+                    }
+                    
+                    if (tileArray[row, column] == 9) //spikes
+                    {
+                        obstaclePosition = new Vector2(column * 32, row * 32);
+                        entity.TouchedHazard = CheckIntersect(entityBounds, entity, obstaclePosition);
                     }                   
                 }
             }
         }
 
-        public void calculateCollision (Rectangle entityBounds, Entity entity, Vector2 obstaclePosition)
+        public bool CheckIntersect(Rectangle entityBounds, Entity entity, Vector2 obstaclePosition)
+        {
+            if (entityBounds.Intersects(obstacleBounds))
+            {
+                return true;               
+            }
+            else return false;
+        }
+
+        public void CalculateCollision (Rectangle entityBounds, Entity entity, Vector2 obstaclePosition)
         {           
             obstacleBounds = new Rectangle((int)(obstaclePosition.X), (int)(obstaclePosition.Y), 32, 32);
 
@@ -102,12 +132,12 @@ namespace GameDevProtoType
             {
                 for (int column = 0; column < tileArray.GetLength(1); column++)
                 {
-                    drawTiles(row, column);
+                    DrawTiles(row, column);
                 }
             }
         }      
 
-        public void drawTiles (int row, int column)
+        public void DrawTiles (int row, int column)
         {
             if (tileArray[row, column] != 0)
             {
@@ -140,11 +170,20 @@ namespace GameDevProtoType
                     case 7:
                         TileHelper = 192; //connecting column-platform tile
                         break;
+
+                    case 8:
+                        TileHelper = 544; //coin
+                        break;
+
+                    case 9:
+                        TileHelper = 96; //spikes
+                        break;
+                    
                 }
                 TileSelector = new Rectangle(TileHelper, 0, 32, 32);
                 obstaclePosition = new Vector2(column * TileSelector.Width, row * TileSelector.Height);
                 SpriteBatch.Draw(ObstacleSprite, obstaclePosition, TileSelector, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             }
-        }
+        }       
     }
 }

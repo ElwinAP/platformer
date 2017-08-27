@@ -76,6 +76,7 @@
     <Compile Include="Level.cs" />
     <Compile Include="Level1.cs" />
     <Compile Include="Level2.cs" />
+    <Compile Include="Level3.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -91,10 +92,10 @@
     <Content Include="Content\Graphics\Enemy1Sheet.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Graphics\JnRLayer01.png">
+    <Content Include="Content\Graphics\Level1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Graphics\Level1.png">
+    <Content Include="Content\Graphics\Level2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Graphics\playersheet.png">

@@ -10,11 +10,12 @@ using Microsoft.Xna.Framework.Input;
 
 namespace GameDevProtoType
 {
-    class Enemy1 : Entity
+    class Enemy : Entity
     {
         public Rectangle Bounds;
         public bool movingRight;
         int i = 0;
+        public Vector2 StartPosition;
 
         public int Width
         {
@@ -26,7 +27,7 @@ namespace GameDevProtoType
             get { return animation.spriteSheet.Height; }
         }
 
-        public Enemy1(GraphicsDevice graphicsDevice, ContentManager content, Level level)
+        public Enemy(GraphicsDevice graphicsDevice, ContentManager content, Level level)
             : base (graphicsDevice, content, level)
         { }
 
@@ -40,7 +41,7 @@ namespace GameDevProtoType
             TouchedEdge = true;
             animationCounter = 0;
             animationBaseSpeed = 0.2;
-            Velocity = new Vector2(2f, 0.02f);
+            Velocity = new Vector2(1f, 0.02f);
             current_animation = "walk_right";
             movingRight = true;
 
@@ -71,7 +72,6 @@ namespace GameDevProtoType
 
         private void enemyPatrol (GameTime gametime)
         {
-            Console.WriteLine(TouchedEdge);
             Position += MoveSpeed;
  
             if (movingRight == true)
@@ -83,7 +83,7 @@ namespace GameDevProtoType
                 walkLeft();
             }
        
-                 
+            //tijdelijk om te testen     
             if (i != 100)
             {
                 i++;

@@ -13,7 +13,6 @@ namespace GameDevProtoType
         KeyboardState currentKeyboardState;
         public Rectangle Bounds;
 
-
         public int Width
         {
             get { return animation.spriteSheet.Width / 6; }
@@ -78,12 +77,12 @@ namespace GameDevProtoType
 
             if (currentKeyboardState.IsKeyDown(Keys.Left))
             {
-                calculateAcceleration();
+                CalculateAcceleration();
                 walkLeft();
             }
             else if (currentKeyboardState.IsKeyDown(Keys.Right))
             {               
-                calculateAcceleration();
+                CalculateAcceleration();
                 walkRight();
             }
             else
@@ -97,10 +96,10 @@ namespace GameDevProtoType
                 Jump();
             }
 
-            applyGravity();     
+            ApplyGravity();     
         }
 
-        private void calculateAcceleration ()
+        private void CalculateAcceleration ()
         {
             if (Velocity.X < MaxVelocity.X)
             {
@@ -115,7 +114,7 @@ namespace GameDevProtoType
             IsGrounded = false;
         }
 
-        private void applyGravity ()
+        private void ApplyGravity ()
         {
             if (!IsGrounded)
             {

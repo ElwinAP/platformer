@@ -5,17 +5,22 @@ using System;
 
 namespace GameDevProtoType
 {
-
+    enum LevelState
+    {
+        level1,
+        level2,
+        level3
+    }
+    
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Player player;
-        Level level1;
-        Enemy1 enemy1;
-        Vector2 StartPosition;
-        Vector2 EnemyPosition;
-        
+        Level level;
+        Enemy enemy1;
+        Enemy enemy2;
+        LevelState _state;    
 
         public Game1()
         {
@@ -23,40 +28,38 @@ namespace GameDevProtoType
             Content.RootDirectory = "Content";
         }
 
-
         protected override void Initialize()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            level1 = new Level1(Content, spriteBatch);
-            player = new Player(GraphicsDevice, Content, level1);
-            enemy1 = new Enemy1(GraphicsDevice, Content, level1);
+            if (_state == LevelState.level1)
+            {
+                level = new Level1(Content, spriteBatch);
+            }
+          
+            player = new Player(GraphicsDevice, Content, level);
+            enemy1 = new Enemy(GraphicsDevice, Content, level);
+            enemy2 = new Enemy(GraphicsDevice, Content, level);
 
-            StartPosition = new Vector2(20, 400);
-            EnemyPosition = new Vector2(400, 400);
-
-            player.Initialize(StartPosition);
-            enemy1.Initialize(EnemyPosition);
-
-            level1.Initialize();
-            
-
+            level.Initialize();
+            player.Initialize(level.StartPosition);
+            enemy1.Initialize(level.enemy1Position);
+            enemy2.Initialize(level.enemy2Position);
 
             base.Initialize();
         }
-
 
         protected override void LoadContent()
         {          
             player.LoadContent();
             enemy1.LoadContent();
-            level1.LoadContent();          
+            enemy2.LoadContent();
+            level.LoadContent();          
         }
-
 
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+            Content.Unload(); //niet zeker of dit juist alle content unload.
         }
 
         
@@ -65,12 +68,56 @@ namespace GameDevProtoType
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            if (player.ReachedExit == true)
+            {
+                switch (_state)
+                {
+                    case LevelState.level1:
+                        TransferLevel2(gameTime);
+                        break;
+
+                    case LevelState.level2:
+                        TransferLevel3(gameTime);
+                        break;
+                }
+
+                player.ReachedExit = false;
+            }
+
             player.Update(gameTime);
-            level1.Collision(player.Bounds, player);
+            level.Collision(player.Bounds, player);
             enemy1.Update(gameTime);
-            level1.Collision(enemy1.Bounds, enemy1);
-                    
+            level.Collision(enemy1.Bounds, enemy1);
+            enemy2.Update(gameTime);
+            level.Collision(enemy2.Bounds, enemy2);
+
             base.Update(gameTime);
+        }
+
+        private void TransferLevel2 (GameTime gameTime)
+        {
+            UnloadContent();
+            _state = LevelState.level2;
+            level = new Level2(Content, spriteBatch);
+            StartNewLevel(gameTime);
+        }
+
+        private void TransferLevel3 (GameTime gameTime)
+        {
+            UnloadContent();
+            _state = LevelState.level3;
+            level = new Level3(Content, spriteBatch);
+            StartNewLevel(gameTime);
+        }
+
+        public void StartNewLevel (GameTime gameTime)
+        {
+            level.Initialize();
+            player.Initialize(level.StartPosition);
+            enemy1.Initialize(level.enemy1Position);
+            enemy2.Initialize(level.enemy2Position);
+            LoadContent();
+            Draw(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
@@ -79,13 +126,12 @@ namespace GameDevProtoType
 
             // alle drawing toevoegen tussen begin en end
             spriteBatch.Begin();
-
-            
-            level1.DrawBackground(GraphicsDevice);
-            level1.Draw();
+          
+            level.DrawBackground(GraphicsDevice);
+            level.Draw();
             player.Draw(spriteBatch);
             enemy1.Draw(spriteBatch);
-
+            enemy2.Draw(spriteBatch);
 
             spriteBatch.End();
 
