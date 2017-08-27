@@ -35,19 +35,13 @@ namespace GameDevProtoType
             set { _TouchedEdge = value; }
         }
         
-        public int time; //tijdsfactor voor acceleration en velocity
-
+        public int time;
         public Vector2 Velocity;
         public Vector2 Acceleration;
         public Vector2 MaxVelocity;
-
-        //dit worden parameters voor animationFrames method
         public int animationFrame;
         public double animationCounter;
         public double animationBaseSpeed; // dit tel ik op bij de animationCounter in animation.calculateframe om snelheid van animatie te bepalen
-
-        
-
         public Animation animation;
         public string current_animation;
 
@@ -77,8 +71,20 @@ namespace GameDevProtoType
 
             animationCounter = animation.calculateFrame(animationCounter, animationBaseSpeed);
         }
-
         
+        public void walkLeft ()
+        {
+            MoveSpeed.X = -Velocity.X;
+            current_animation = "walk_left";
+            calculateEntityFrame(Velocity);
+        } 
+
+        public void walkRight ()
+        {
+            MoveSpeed.X = Velocity.X;
+            current_animation = "walk_right";
+            calculateEntityFrame(Velocity);
+        }
 
         public void Draw(SpriteBatch spritebatch)
         {

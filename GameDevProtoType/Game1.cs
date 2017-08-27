@@ -49,8 +49,8 @@ namespace GameDevProtoType
         protected override void LoadContent()
         {          
             player.LoadContent();
-            level1.LoadContent();
             enemy1.LoadContent();
+            level1.LoadContent();          
         }
 
 
@@ -66,17 +66,12 @@ namespace GameDevProtoType
                 Exit();
 
             player.Update(gameTime);
-            level1.Collision(gameTime, player.Bounds, player, player.MoveSpeed);
-            level1.Collision(gameTime, enemy1.Bounds, enemy1, enemy1.MoveSpeed);
+            level1.Collision(player.Bounds, player);
             enemy1.Update(gameTime);
-            
-                   
+            level1.Collision(enemy1.Bounds, enemy1);
+                    
             base.Update(gameTime);
         }
-
-
-        
-
 
         protected override void Draw(GameTime gameTime)
         {

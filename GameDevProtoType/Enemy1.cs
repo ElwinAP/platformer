@@ -13,6 +13,8 @@ namespace GameDevProtoType
     class Enemy1 : Entity
     {
         public Rectangle Bounds;
+        public bool movingRight;
+        int i = 0;
 
         public int Width
         {
@@ -35,11 +37,12 @@ namespace GameDevProtoType
             Health = 20;
             Active = true;
             IsGrounded = false;
-            TouchedEdge = false;
+            TouchedEdge = true;
             animationCounter = 0;
             animationBaseSpeed = 0.2;
             Velocity = new Vector2(2f, 0.02f);
             current_animation = "walk_right";
+            movingRight = true;
 
             animation = new Animation();
             animation.Initialize(Position);
@@ -68,35 +71,37 @@ namespace GameDevProtoType
 
         private void enemyPatrol (GameTime gametime)
         {
+            Console.WriteLine(TouchedEdge);
             Position += MoveSpeed;
-
-            MoveSpeed.X = Velocity.X;
-            calculateEntityFrame(Velocity);
-            
-            //hier enemy probleem verder debuggen
-            if (TouchedEdge == true)
+ 
+            if (movingRight == true)
             {
-                Velocity.X = Velocity.X * -1;
-                current_animation = "walk_left";
-                TouchedEdge = false;
-                calculateEntityFrame(Velocity);
+                walkRight();
             }
-
-            //else
-            //{
-            //    MoveSpeed.X = Velocity.X;
-            //    current_animation = "walk_right";
-            //    calculateEntityFrame(Velocity);
-            //}
-
+            else
+            {
+                walkLeft();
+            }
+       
+                 
+            if (i != 100)
+            {
+                i++;
+            }
+            else
+            {
+                i = 0;
+                movingRight = !movingRight;
+                TouchedEdge = true;
+            }
 
             if (!IsGrounded)
             {
                 MoveSpeed.Y += 0.15f;
                 IsGrounded = false;   
             }
-
-
         }
+
+        
     }
 }

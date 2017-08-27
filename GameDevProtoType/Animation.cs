@@ -23,11 +23,8 @@ namespace GameDevProtoType
         //Ik gebruik een dictionary om animation frames bij te houden
         Dictionary<string, Rectangle[]> Animations;
 
-
         public Animation ()
-        {
-            
-        }
+        {   }
 
         public double calculateFrame(double animationcounter, double animationspeed)
         {

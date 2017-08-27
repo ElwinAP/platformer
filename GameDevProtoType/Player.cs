@@ -68,7 +68,6 @@ namespace GameDevProtoType
             // positie van speler box updaten
             Bounds.X = (int)Position.X;
             Bounds.Y = (int)Position.Y;
-
         }
 
         private void UserInput(GameTime gametime) // alle invoer hier afhandelen
@@ -79,59 +78,55 @@ namespace GameDevProtoType
 
             if (currentKeyboardState.IsKeyDown(Keys.Left))
             {
-                if (Velocity.X < MaxVelocity.X)
-                {
-                    Velocity.X += Acceleration.X * time;
-                }
-                
-                MoveSpeed.X = -Velocity.X;
-                current_animation = "walk_left";
-                calculateEntityFrame(Velocity);
+                calculateAcceleration();
+                walkLeft();
             }
-
             else if (currentKeyboardState.IsKeyDown(Keys.Right))
-            {
-                if (Velocity.X < MaxVelocity.X)
-                {
-                    Velocity.X += Acceleration.X * time;
-                }
-
-                MoveSpeed.X = Velocity.X;
-                current_animation = "walk_right";
-                calculateEntityFrame(Velocity);
+            {               
+                calculateAcceleration();
+                walkRight();
             }
-
             else
             {
                 MoveSpeed.X = 0f;
                 Velocity.X = 0;
             }
               
-
             if (currentKeyboardState.IsKeyDown(Keys.Space) && IsGrounded == true)
             {
-                Position.Y -= 15f * Velocity.Y; // met velocity vermenigvuldigen heeft bug dat speler even tegen blokjes blijft "plakken" opgelost. Oppassen voor nieuwe bugs
-                MoveSpeed.Y = -5f;
-                IsGrounded = false;
+                Jump();
             }
 
-            // Als speler niet op de grond is, pas zwaartekracht toe. 
+            applyGravity();     
+        }
+
+        private void calculateAcceleration ()
+        {
+            if (Velocity.X < MaxVelocity.X)
+            {
+                Velocity.X += Acceleration.X * time;
+            }
+        }
+
+        private void Jump ()
+        {
+            Position.Y -= 15f * Velocity.Y; // met velocity vermenigvuldigen heeft bug dat speler even tegen blokjes blijft "plakken" opgelost. Oppassen voor nieuwe bugs
+            MoveSpeed.Y = -5f;
+            IsGrounded = false;
+        }
+
+        private void applyGravity ()
+        {
             if (!IsGrounded)
             {
                 MoveSpeed.Y += 0.15f;
                 IsGrounded = false;
             }
-
             else
             {
                 MoveSpeed.Y = 0f;
                 Velocity.Y = 1f;
             }
-                     
-            
         }
-
-        
-
     }
 }
