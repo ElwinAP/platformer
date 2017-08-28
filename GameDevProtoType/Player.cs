@@ -51,7 +51,7 @@ namespace GameDevProtoType
             animation.LoadContent(Content, EntitySprite);
 
             //speler collision box
-            Bounds = new Rectangle((int)(Position.X), (int)(Position.Y), 32, 32);
+            Bounds = new Rectangle((int)(Position.X), (int)(Position.Y), EntitySprite.Width / 6, EntitySprite.Height);
         }
 
         public override void Update(GameTime gametime)
@@ -59,6 +59,12 @@ namespace GameDevProtoType
             currentKeyboardState = Keyboard.GetState();
 
             UserInput(gametime);
+
+            if (TouchedHazard == true)
+            {
+                Health -= 1;
+                Console.WriteLine(Health);
+            }
 
             // speler binnen grenzen scherm houden
             Position.X = MathHelper.Clamp(Position.X, 0, GraphicsDevice.Viewport.Width - Width);

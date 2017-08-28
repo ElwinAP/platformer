@@ -11,6 +11,12 @@ namespace GameDevProtoType
         level2,
         level3
     }
+
+    enum GameState
+    {
+        playing,
+        gameOver
+    }
     
     public class Game1 : Game
     {
@@ -20,7 +26,7 @@ namespace GameDevProtoType
         Level level;
         Enemy enemy1;
         Enemy enemy2;
-        LevelState _state;    
+        LevelState _levelstate;    
 
         public Game1()
         {
@@ -32,7 +38,7 @@ namespace GameDevProtoType
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            if (_state == LevelState.level1)
+            if (_levelstate == LevelState.level1)
             {
                 level = new Level1(Content, spriteBatch);
             }
@@ -70,7 +76,7 @@ namespace GameDevProtoType
 
             if (player.ReachedExit == true)
             {
-                switch (_state)
+                switch (_levelstate)
                 {
                     case LevelState.level1:
                         TransferLevel2(gameTime);
@@ -97,7 +103,7 @@ namespace GameDevProtoType
         private void TransferLevel2 (GameTime gameTime)
         {
             UnloadContent();
-            _state = LevelState.level2;
+            _levelstate = LevelState.level2;
             level = new Level2(Content, spriteBatch);
             StartNewLevel(gameTime);
         }
@@ -105,7 +111,7 @@ namespace GameDevProtoType
         private void TransferLevel3 (GameTime gameTime)
         {
             UnloadContent();
-            _state = LevelState.level3;
+            _levelstate = LevelState.level3;
             level = new Level3(Content, spriteBatch);
             StartNewLevel(gameTime);
         }

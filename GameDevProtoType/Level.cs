@@ -53,34 +53,39 @@ namespace GameDevProtoType
             {
                 for (int column = 0; column < tileArray.GetLength(1); column++)
                 {
-                    if (tileArray[row, column] != 0)
+                    if (tileArray[row, column] != 0 && tileArray[row, column] != 8 && tileArray[row, column] != 9)
                     {
                         obstaclePosition = new Vector2(column * 32, row * 32);
                         CalculateCollision(entityBounds, entity, obstaclePosition);
                     }
                     
-                    if (tileArray[row, column] == 8) //exitpoint van het level
+                    else if (tileArray[row, column] == 8) //exitpoint van het level
                     {
                         obstaclePosition = new Vector2(column * 32, row * 32);
-                        entity.ReachedExit = CheckIntersect(entityBounds, entity, obstaclePosition);
+                        entity.ReachedExit = CheckIntersect(entityBounds, obstaclePosition);
                     }
                     
-                    if (tileArray[row, column] == 9) //spikes
+                    else if (tileArray[row, column] == 9) //spikes
                     {
                         obstaclePosition = new Vector2(column * 32, row * 32);
-                        entity.TouchedHazard = CheckIntersect(entityBounds, entity, obstaclePosition);
+                        entity.TouchedHazard = CheckIntersect(entityBounds, obstaclePosition);
                     }                   
                 }
             }
         }
 
-        public bool CheckIntersect(Rectangle entityBounds, Entity entity, Vector2 obstaclePosition)
+        public bool CheckIntersect(Rectangle entityBounds, Vector2 obstaclePosition)
         {
+            obstacleBounds = new Rectangle((int)(obstaclePosition.X), (int)(obstaclePosition.Y), 32, 32);
+
             if (entityBounds.Intersects(obstacleBounds))
             {
                 return true;               
             }
-            else return false;
+            else
+            {
+                return false;
+            }
         }
 
         public void CalculateCollision (Rectangle entityBounds, Entity entity, Vector2 obstaclePosition)
@@ -168,18 +173,19 @@ namespace GameDevProtoType
                         break;
 
                     case 7:
-                        TileHelper = 192; //connecting column-platform tile
+                        TileHelper = 384; //ground edge right
                         break;
 
                     case 8:
-                        TileHelper = 544; //coin
+                        TileHelper = 128; //exit
                         break;
 
                     case 9:
                         TileHelper = 96; //spikes
                         break;
-                    
+                                     
                 }
+
                 TileSelector = new Rectangle(TileHelper, 0, 32, 32);
                 obstaclePosition = new Vector2(column * TileSelector.Width, row * TileSelector.Height);
                 SpriteBatch.Draw(ObstacleSprite, obstaclePosition, TileSelector, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
