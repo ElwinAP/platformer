@@ -72,6 +72,7 @@ namespace GameDevProtoType
                     }
                 }
             }
+
         }
 
         public bool CheckIntersect(Rectangle entityBounds, Vector2 obstaclePosition)

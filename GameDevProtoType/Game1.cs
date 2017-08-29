@@ -37,7 +37,7 @@ namespace GameDevProtoType
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             gamestateactive = true;
-            gameoverinterval = 2000; //milliseconds
+            gameoverinterval = 1000; //milliseconds
             time = 0;
 
             if (_levelstate == LevelState.level1)
@@ -88,27 +88,36 @@ namespace GameDevProtoType
                     case LevelState.level2:
                         TransferLevel3(gameTime);
                         break;
+
+                    case LevelState.level3:
+                        TransferLevel2(gameTime);
+                        break;
                 }
 
                 player.ReachedExit = false;
             }
-
+           
             if (gamestateactive == true)
             {
                 player.Update(gameTime);
+                level.Collision(player.Bounds, player);
+                enemy1.Update(gameTime);
+                enemy2.Update(gameTime);
+
+                if (player.Bounds.Intersects(enemy1.Bounds) || player.Bounds.Intersects(enemy2.Bounds))
+                {
+                    player.NotActive = true;
+                }
             }
-           
-            level.Collision(player.Bounds, player);
-            enemy1.Update(gameTime);
-            level.Collision(enemy1.Bounds, enemy1);
-            enemy2.Update(gameTime);
-            level.Collision(enemy2.Bounds, enemy2);
+                                  
+            //level.Collision(enemy1.Bounds, enemy1);
+            //level.Collision(enemy2.Bounds, enemy2);
            
             if (player.NotActive == true)
             {                
                 GameOver(gameTime);
             }
-
+            
             base.Update(gameTime);
         }
 
@@ -133,6 +142,7 @@ namespace GameDevProtoType
             time += gameTime.ElapsedGameTime.Milliseconds;
             gamestateactive = false;
             MediaPlayer.Play(gameoversound);
+            Console.WriteLine(time);
 
             if (time > gameoverinterval)
             {
@@ -140,6 +150,7 @@ namespace GameDevProtoType
                 _levelstate = LevelState.level1;
                 level = new Level1(Content, spriteBatch);
                 gamestateactive = true;
+                time = 0;
                 StartNewLevel(gameTime);
             }           
         }

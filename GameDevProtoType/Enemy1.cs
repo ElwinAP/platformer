@@ -71,7 +71,7 @@ namespace GameDevProtoType
 
         private void enemyPatrol (GameTime gametime)
         {
-            Position += MoveSpeed;
+            Position.X += MoveSpeed.X;
  
             if (movingRight == true)
             {
@@ -81,24 +81,20 @@ namespace GameDevProtoType
             {
                 walkLeft();
             }
-       
-            //tijdelijk om te testen     
-            if (i != 100)
+
+            //tijdelijke npc patrol timer om te testen     
+            if (i != 100) 
             {
                 i++;
             }
+
             else
             {
                 i = 0;
                 movingRight = !movingRight;
                 TouchedEdge = true;
             }
-
-            if (!IsGrounded)
-            {
-                MoveSpeed.Y += 0.15f;
-                IsGrounded = false;   
-            }
+           
         }
 
         
