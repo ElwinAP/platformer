@@ -64,12 +64,12 @@ namespace GameDevProtoType
                         obstaclePosition = new Vector2(column * 32, row * 32);
                         entity.ReachedExit = CheckIntersect(entityBounds, obstaclePosition);
                     }
-                    
+
                     else if (tileArray[row, column] == 9) //spikes
                     {
                         obstaclePosition = new Vector2(column * 32, row * 32);
-                        entity.TouchedHazard = CheckIntersect(entityBounds, obstaclePosition);
-                    }                   
+                        entity.NotActive = CheckIntersect(entityBounds, obstaclePosition);
+                    }
                 }
             }
         }

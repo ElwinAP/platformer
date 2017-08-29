@@ -15,7 +15,6 @@ namespace GameDevProtoType
         public Rectangle Bounds;
         public bool movingRight;
         int i = 0;
-        public Vector2 StartPosition;
 
         public int Width
         {
@@ -36,7 +35,7 @@ namespace GameDevProtoType
             Position = position;
             MoveSpeed = new Vector2(0, 1);
             Health = 20;
-            Active = true;
+            NotActive = false;
             IsGrounded = false;
             TouchedEdge = true;
             animationCounter = 0;

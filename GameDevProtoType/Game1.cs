@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
 
 namespace GameDevProtoType
@@ -11,12 +12,6 @@ namespace GameDevProtoType
         level2,
         level3
     }
-
-    enum GameState
-    {
-        playing,
-        gameOver
-    }
     
     public class Game1 : Game
     {
@@ -26,6 +21,10 @@ namespace GameDevProtoType
         Level level;
         Enemy enemy1;
         Enemy enemy2;
+        Song gameoversound;
+        bool gamestateactive;
+        int gameoverinterval;
+        int time;
         LevelState _levelstate;    
 
         public Game1()
@@ -37,12 +36,15 @@ namespace GameDevProtoType
         protected override void Initialize()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            gamestateactive = true;
+            gameoverinterval = 2000; //milliseconds
+            time = 0;
 
             if (_levelstate == LevelState.level1)
             {
                 level = new Level1(Content, spriteBatch);
             }
-          
+
             player = new Player(GraphicsDevice, Content, level);
             enemy1 = new Enemy(GraphicsDevice, Content, level);
             enemy2 = new Enemy(GraphicsDevice, Content, level);
@@ -56,8 +58,9 @@ namespace GameDevProtoType
         }
 
         protected override void LoadContent()
-        {          
-            player.LoadContent();
+        {
+            gameoversound = Content.Load<Song>("Sounds\\gameover");
+            player.LoadContent();          
             enemy1.LoadContent();
             enemy2.LoadContent();
             level.LoadContent();          
@@ -90,21 +93,30 @@ namespace GameDevProtoType
                 player.ReachedExit = false;
             }
 
-            player.Update(gameTime);
+            if (gamestateactive == true)
+            {
+                player.Update(gameTime);
+            }
+           
             level.Collision(player.Bounds, player);
             enemy1.Update(gameTime);
             level.Collision(enemy1.Bounds, enemy1);
             enemy2.Update(gameTime);
             level.Collision(enemy2.Bounds, enemy2);
+           
+            if (player.NotActive == true)
+            {                
+                GameOver(gameTime);
+            }
 
             base.Update(gameTime);
         }
 
         private void TransferLevel2 (GameTime gameTime)
-        {
+        {           
             UnloadContent();
             _levelstate = LevelState.level2;
-            level = new Level2(Content, spriteBatch);
+            level = new Level2(Content, spriteBatch);          
             StartNewLevel(gameTime);
         }
 
@@ -114,6 +126,22 @@ namespace GameDevProtoType
             _levelstate = LevelState.level3;
             level = new Level3(Content, spriteBatch);
             StartNewLevel(gameTime);
+        }
+
+        private void GameOver (GameTime gameTime)
+        {           
+            time += gameTime.ElapsedGameTime.Milliseconds;
+            gamestateactive = false;
+            MediaPlayer.Play(gameoversound);
+
+            if (time > gameoverinterval)
+            {
+                UnloadContent();
+                _levelstate = LevelState.level1;
+                level = new Level1(Content, spriteBatch);
+                gamestateactive = true;
+                StartNewLevel(gameTime);
+            }           
         }
 
         public void StartNewLevel (GameTime gameTime)

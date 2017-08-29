@@ -114,6 +114,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Player\" />
+    <Folder Include="Content\Sounds\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GameDevProtoType_TemporaryKey.pfx" />

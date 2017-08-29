@@ -14,7 +14,7 @@ namespace GameDevProtoType
 
         public Texture2D EntitySprite;
         public Vector2 Position, MoveSpeed;
-        public bool Active; // later gebruiken voor death state
+        public bool NotActive; // later gebruiken voor death state
         public int Health;
         public GraphicsDevice GraphicsDevice;
         public ContentManager Content;

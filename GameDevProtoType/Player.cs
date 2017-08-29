@@ -32,7 +32,7 @@ namespace GameDevProtoType
             Position = position;
             MoveSpeed = new Vector2(0, 1);
             Health = 100;
-            Active = true;
+            NotActive = false;
             IsGrounded = false;
             animationCounter = 0;
             animationBaseSpeed = 0.2;
