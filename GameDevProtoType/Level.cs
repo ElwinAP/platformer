@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Audio;
 
 namespace GameDevProtoType
 {
@@ -25,6 +26,7 @@ namespace GameDevProtoType
         protected Entity entity;
         public Vector2 enemy1Position;
         public Vector2 enemy2Position;
+        public bool coinCollected;       
 
         public Vector2 _StartPosition;
 
@@ -53,7 +55,7 @@ namespace GameDevProtoType
             {
                 for (int column = 0; column < tileArray.GetLength(1); column++)
                 {
-                    if (tileArray[row, column] != 0 && tileArray[row, column] != 8 && tileArray[row, column] != 9)
+                    if (tileArray[row, column] != 0 && tileArray[row, column] != 8 && tileArray[row, column] != 9 && tileArray[row, column] != 10)
                     {
                         obstaclePosition = new Vector2(column * 32, row * 32);
                         CalculateCollision(entityBounds, entity, obstaclePosition);
@@ -69,6 +71,17 @@ namespace GameDevProtoType
                     {
                         obstaclePosition = new Vector2(column * 32, row * 32);
                         entity.NotActive = CheckIntersect(entityBounds, obstaclePosition);
+                    }
+
+                    else if (tileArray[row, column] == 10) //coins
+                    {
+                        obstaclePosition = new Vector2(column * 32, row * 32);
+                        coinCollected = CheckIntersect(entityBounds, obstaclePosition);
+
+                        if (coinCollected == true)
+                        {
+                            tileArray[row, column] = 0;
+                        }
                     }
                 }
             }
@@ -106,7 +119,7 @@ namespace GameDevProtoType
                 float shortestHeight = Math.Min(Math.Abs(topEdge), Math.Abs(bottomEdge));
                 float shortestFinal = Math.Min(Math.Abs(shortestWidth), Math.Abs(shortestHeight));
 
-                if (shortestFinal == Math.Abs(leftEdge)) // BUG - activeert wanneer er over blokjes wordt gewandeld
+                if (shortestFinal == Math.Abs(leftEdge)) // BUG - activeert wanneer er over edge van blokjes wordt gewandeld - alleen probleem bij enemies
                 {
                     entity.Position.X = obstacleBounds.X + obstacleBounds.Width;
                 }
@@ -183,6 +196,10 @@ namespace GameDevProtoType
 
                     case 9:
                         TileHelper = 96; //spikes
+                        break;
+
+                    case 10:
+                        TileHelper = 544; //coins
                         break;
                                      
                 }

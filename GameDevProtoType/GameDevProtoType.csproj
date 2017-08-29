@@ -107,6 +107,7 @@
     <Content Include="Content\Graphics\Tilesheet.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Sounds\CoinPickup.wav" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -114,7 +115,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Player\" />
-    <Folder Include="Content\Sounds\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GameDevProtoType_TemporaryKey.pfx" />

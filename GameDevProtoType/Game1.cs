@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Audio;
 using System;
 
 namespace GameDevProtoType
@@ -22,6 +23,7 @@ namespace GameDevProtoType
         Enemy enemy1;
         Enemy enemy2;
         Song gameoversound;
+        SoundEffect coincollectsound;
         bool gamestateactive;
         int gameoverinterval;
         int time;
@@ -60,6 +62,7 @@ namespace GameDevProtoType
         protected override void LoadContent()
         {
             gameoversound = Content.Load<Song>("Sounds\\gameover");
+            coincollectsound = Content.Load<SoundEffect>("Sounds\\CoinPickup");
             player.LoadContent();          
             enemy1.LoadContent();
             enemy2.LoadContent();
@@ -107,6 +110,12 @@ namespace GameDevProtoType
                 if (player.Bounds.Intersects(enemy1.Bounds) || player.Bounds.Intersects(enemy2.Bounds))
                 {
                     player.NotActive = true;
+                }
+
+                if (level.coinCollected == true)
+                {
+                    coincollectsound.Play();
+                    level.coinCollected = false;
                 }
             }
                                   
